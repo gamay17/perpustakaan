@@ -116,8 +116,6 @@ CREATE TABLE `member` (
   `nama` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
   `jenis_kelamin` varchar(20) NOT NULL,
-  `kelas` varchar(5) NOT NULL,
-  `jurusan` varchar(50) NOT NULL,
   `no_tlp` varchar(15) NOT NULL,
   `tgl_pendaftaran` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -126,7 +124,7 @@ CREATE TABLE `member` (
 -- Dumping data for table `member`
 --
 
-INSERT INTO `member` (`nisn`, `kode_member`, `nama`, `password`, `jenis_kelamin`, `kelas`, `jurusan`, `no_tlp`, `tgl_pendaftaran`) VALUES
+INSERT INTO `member` (`nisn`, `kode_member`, `nama`, `password`, `jenis_kelamin`, `no_tlp`, `tgl_pendaftaran`) VALUES
 (202301, 'mem01', 'mangandaralam sakti ', '$2y$10$U53PbfrWXwvMiZ42WzdyfuRLyNKAAxecgPC7ZC..4pxGA8NtlrqBS', 'Laki laki', 'XI', 'Rekayasa Perangkat Lunak', '081383877025', '2023-10-22');
 
 -- --------------------------------------------------------

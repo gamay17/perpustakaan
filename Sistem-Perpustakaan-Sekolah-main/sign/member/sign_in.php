@@ -69,7 +69,7 @@ if(isset($_POST["signIn"]) ) {
                     <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-hashtag"></i></span>
                     <input type="number" class="form-control" name="nisn" id="validationCustom01" required>
                     <div class="invalid-feedback">
-                        Masukkan Nisn anda!
+                        Masukkan ID Member anda!
                     </div>
                 </div>
                 <label for="validationCustom02" class="form-label">Password</label>
@@ -89,7 +89,7 @@ if(isset($_POST["signIn"]) ) {
             </form>
         </div>
         <?php if(isset($error)) : ?>
-        <div class="alert alert-danger mt-2" role="alert">Nama / Nisn / Password tidak sesuai !
+        <div class="alert alert-danger mt-2" role="alert">Nama / ID Member / Password tidak sesuai !
         </div>
         <?php endif; ?>
     </div>

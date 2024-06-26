@@ -126,7 +126,7 @@ function searchMember ($keyword) {
    nisn LIKE '%$keyword%' OR 
    kode_member LIKE '%$keyword%' OR
    nama LIKE '%$keyword%' OR 
-   jurusan LIKE '%$keyword%'
+
    ";
    return queryReadData($searchMember);
 }
@@ -135,10 +135,29 @@ function searchMember ($keyword) {
 // DELETE DATA Buku
 function delete($bukuId) {
   global $connection;
-  $queryDeleteBuku = "DELETE FROM buku WHERE id_buku = '$bukuId'
-  ";
+
+  // Periksa apakah buku masih dipinjam sebelum menghapusnya
+  $checkPeminjamanQuery = "SELECT COUNT(*) as count FROM peminjaman WHERE id_buku = '$bukuId' AND tgl_pengembalian IS NULL";
+  $result = mysqli_query($connection, $checkPeminjamanQuery);
+
+  if (!$result) {
+      // Query error handling
+      echo "Error: " . mysqli_error($connection);
+      return -1;
+  }
+
+  $row = mysqli_fetch_assoc($result);
+
+  if ($row['count'] > 0) {
+      // Buku masih dipinjam, hentikan penghapusan
+      return -1; // Menandakan buku masih dipinjam
+  }
+
+  // Hapus buku dari tabel buku
+  $queryDeleteBuku = "DELETE FROM buku WHERE id_buku = '$bukuId'";
   mysqli_query($connection, $queryDeleteBuku);
-  
+
+  // Mengembalikan jumlah baris yang terpengaruh oleh operasi DELETE
   return mysqli_affected_rows($connection);
 }
 
@@ -186,10 +205,23 @@ function updateBuku($dataBuku) {
 // Hapus member yang terdaftar
 function deleteMember($nisnMember) {
   global $connection;
-  
-  $deleteMember = "DELETE FROM member WHERE nisn = $nisnMember";
-  mysqli_query($connection, $deleteMember);
-  return mysqli_affected_rows($connection);
+
+  // Hapus entri terkait di tabel pengembalian
+  $deletePengembalianQuery = "DELETE FROM pengembalian WHERE nisn = ?";
+  $stmt = mysqli_prepare($connection, $deletePengembalianQuery);
+  mysqli_stmt_bind_param($stmt, 's', $nisnMember);
+  mysqli_stmt_execute($stmt);
+  mysqli_stmt_close($stmt);
+
+  // Hapus entri di tabel member
+  $deleteMemberQuery = "DELETE FROM member WHERE nisn = ?";
+  $stmt = mysqli_prepare($connection, $deleteMemberQuery);
+  mysqli_stmt_bind_param($stmt, 's', $nisnMember);
+  mysqli_stmt_execute($stmt);
+  $affectedRows = mysqli_stmt_affected_rows($stmt);
+  mysqli_stmt_close($stmt);
+
+  return $affectedRows;
 }
 
 // Hapus history pengembalian data BUKU
@@ -287,5 +319,3 @@ function bayarDenda($data) {
 
 // === FUNCTION KHUSUS MEMBER END ===
 ?>
-
-
