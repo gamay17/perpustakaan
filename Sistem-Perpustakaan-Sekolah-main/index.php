@@ -8,7 +8,7 @@
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <script src="https://kit.fontawesome.com/de8de52639.js" crossorigin="anonymous"></script>
     <title>Pitimoss.com</title>
-    <link rel="icon" href="assets/logoUrl.png" type="image/png">
+    <link rel="icon" href="assets/logoUrl.png" type="image/png">s
 </head>
 
 <body>
@@ -72,9 +72,9 @@
 
         <div class="d-flex justify-content-center flex-wrap gap-4 mt-4">
             <div class="card border-info mb-3" style="max-width: 18rem;">
-                <div class="card-header">Mangandaralam Sakti</div>
                 <div class="card-body">
-                    <h5 class="card-title">Student At SMKN 1 Jakarta update by Student widyatama University</h5>
+                    <h5 class="card-title">Updated by Student widyatama University</h5>
+                    <div class="card-lower">and Student At SMKN 1 Jakarta</div>
                 </div>
             </div>
         </div>

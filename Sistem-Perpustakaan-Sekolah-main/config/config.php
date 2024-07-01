@@ -126,7 +126,7 @@ function searchMember ($keyword) {
    nisn LIKE '%$keyword%' OR 
    kode_member LIKE '%$keyword%' OR
    nama LIKE '%$keyword%' OR 
-
+   jurusan LIKE '%$keyword%'
    ";
    return queryReadData($searchMember);
 }
@@ -135,29 +135,10 @@ function searchMember ($keyword) {
 // DELETE DATA Buku
 function delete($bukuId) {
   global $connection;
-
-  // Periksa apakah buku masih dipinjam sebelum menghapusnya
-  $checkPeminjamanQuery = "SELECT COUNT(*) as count FROM peminjaman WHERE id_buku = '$bukuId' AND tgl_pengembalian IS NULL";
-  $result = mysqli_query($connection, $checkPeminjamanQuery);
-
-  if (!$result) {
-      // Query error handling
-      echo "Error: " . mysqli_error($connection);
-      return -1;
-  }
-
-  $row = mysqli_fetch_assoc($result);
-
-  if ($row['count'] > 0) {
-      // Buku masih dipinjam, hentikan penghapusan
-      return -1; // Menandakan buku masih dipinjam
-  }
-
-  // Hapus buku dari tabel buku
-  $queryDeleteBuku = "DELETE FROM buku WHERE id_buku = '$bukuId'";
+  $queryDeleteBuku = "DELETE FROM buku WHERE id_buku = '$bukuId'
+  ";
   mysqli_query($connection, $queryDeleteBuku);
-
-  // Mengembalikan jumlah baris yang terpengaruh oleh operasi DELETE
+  
   return mysqli_affected_rows($connection);
 }
 
